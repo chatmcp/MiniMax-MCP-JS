@@ -8,12 +8,12 @@
     "minimax-mcp-js": "./build/index.js"
   },
   "scripts": {
-    "build": "tsc && chmod 755 build/index.js",
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
     "start": "node build/index.js",
     "dev": "tsc -w",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "prettier --check \"src/**/*.ts\"",
-    "prepare": "pnpm run build",
+    "prepare": "npm run build",
     "pretest": "pnpm run build",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
   },
