@@ -37,6 +37,7 @@ JavaScript/TypeScript implementation of MiniMax MCP, providing image generation,
   <a href="https://github.com/MiniMax-AI/MiniMax-MCP-JS/blob/main/LICENSE" style="margin: 2px;">
     <img alt="Code License" src="https://img.shields.io/badge/_Code_License-MIT-FF4040?style=flat-square&labelColor=2C3E50" style="display: inline-block; vertical-align: middle;"/>
   </a>
+  <a href="https://smithery.ai/server/@MiniMax-AI/MiniMax-MCP-JS"><img alt="Smithery Badge" src="https://smithery.ai/badge/@MiniMax-AI/MiniMax-MCP-JS"></a>
 </div>
 
 </div>
@@ -57,6 +58,15 @@ JavaScript/TypeScript implementation of MiniMax MCP, providing image generation,
 
 ## Installation
 
+### Installing via Smithery
+
+To install MiniMax MCP JS for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@MiniMax-AI/MiniMax-MCP-JS):
+
+```bash
+npx -y @smithery/cli install @MiniMax-AI/MiniMax-MCP-JS --client claude
+```
+
+### Installing manually
 ```bash
 # Install with pnpm (recommended)
 pnpm add minimax-mcp-js
