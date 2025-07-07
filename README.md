@@ -53,6 +53,8 @@ JavaScript/TypeScript implementation of MiniMax MCP, providing image generation,
 - Image Generation
 - Video Generation
 - Voice Cloning
+- Music Generation
+- Voice Design
 - Dynamic configuration (supports both environment variables and request parameters)
 - Compatible with MCP platform hosting (ModelScope and other MCP platforms)
 
@@ -264,6 +266,12 @@ This prioritization ensures flexibility across different deployment scenarios wh
 <img src="https://public-cdn-video-data-algeng.oss-cn-wulanchabu.aliyuncs.com/gen_image.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle;"/>
 <img src="https://public-cdn-video-data-algeng.oss-cn-wulanchabu.aliyuncs.com/gen_image1.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle; "/>
 
+### 5. generate music
+<img src="https://filecdn.minimax.chat/public/5675b3dc-6789-4ceb-9505-8ef39ae4224f.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle;"/>
+
+### 6. voice design
+<img src="https://filecdn.minimax.chat/public/5654f5df-0642-477f-9c5d-b853d185b8b0.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle;"/>
+
 ## Available Tools
 
 ### Text to Audio
@@ -339,8 +347,10 @@ Tool Name: `generate_video`
 
 Parameters:
 - `prompt`: Video description (required)
-- `model`: Model version, options are 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', default is 'T2V-01'
+- `model`: Model version, options are 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', 'MiniMax-Hailuo-02', default is 'T2V-01'
 - `firstFrameImage`: Path to first frame image (optional)
+- `duration`: The duration of the video. The model must be "MiniMax-Hailuo-02". Values can be 6 and 10. (optional)
+- `resolution`: The resolution of the video. The model must be "MiniMax-Hailuo-02". Values range ["768P", "1080P"]. (optional)
 - `outputDirectory`: Directory to save the output file (optional)
 - `outputFile`: Path to save the output file (optional, auto-generated if not provided)
 - `asyncMode`: Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result. (optional)
@@ -354,6 +364,33 @@ Tool Name: `query_video_generation`
 Parameters:
 - `taskId`: The Task ID to query. Should be the task_id returned by `generate_video` tool if `async_mode` is True. (required)
 - `outputDirectory`: Directory to save the output file (optional)
+
+### Generate Music
+
+Generate music from prompt and lyrics.
+
+Tool Name: `music_generation`
+
+Parameters:
+- `prompt`: Music creation inspiration describing style, mood, scene, etc. Example: "Pop music, sad, suitable for rainy nights". Character range: [10, 300]. (required)
+- `lyrics`: Song lyrics for music generation. Use newline (\\n) to separate each line of lyrics. Supports lyric structure tags [Intro] [Verse] [Chorus] [Bridge] [Outro] to enhance musicality. Character range: [10, 600] (each Chinese character, punctuation, and letter counts as 1 character). (required)
+- `sampleRate`: Sample rate of generated music. Values: [16000, 24000, 32000, 44100], default is 32000. (optional)
+- `bitrate`: Bitrate of generated music. Values: [32000, 64000, 128000, 256000], default is 128000. (optional)
+- `format`: Format of generated music. Values: ["mp3", "wav", "pcm"], default is 'mp3'. (optional)
+- `outputDirectory`: The directory to save the output file. (optional)
+
+
+### Voice Design
+
+Generate a voice based on description prompts.
+
+Tool Name: `voice_design`
+
+Parameters:
+- `prompt`: The prompt to generate the voice from. (required)
+- `previewText`: The text to preview the voice. (required)
+- `voiceId`: The id of the voice to use. For example, "male-qn-qingse"/"audiobook_female_1"/"cute_boy"/"Charming_Lady"... (optional)
+- `outputDirectory`: The directory to save the output file. (optional)
 
 ## FAQ
 

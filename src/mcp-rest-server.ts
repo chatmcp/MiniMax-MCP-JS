@@ -217,14 +217,41 @@ export class MCPRestServer {
                 { name: 'channel', description: 'Audio channels, values: [1, 2]', required: false },
                 { name: 'languageBoost', description: 'Language boost', required: false },
                 { name: 'outputFile', description: 'Output file path, auto-generated if not provided', required: false }
-              ]
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  text: { type: 'string' },
+                  outputDirectory: { type: 'string' },
+                  voiceId: { type: 'string' },
+                  model: { type: 'string' },
+                  speed: { type: 'number' },
+                  vol: { type: 'number' },
+                  pitch: { type: 'number' },
+                  emotion: { type: 'string' },
+                  format: { type: 'string' },
+                  sampleRate: { type: 'number' },
+                  bitrate: { type: 'number' },
+                  channel: { type: 'number' },
+                  languageBoost: { type: 'boolean' },
+                  outputFile: { type: 'string' }
+                },
+                required: ['text']
+              }
             },
             {
               name: 'list_voices',
               description: 'List all available voices',
               arguments: [
                 { name: 'voiceType', description: 'Type of voices to list, values: ["all", "system", "voice_cloning"]', required: false }
-              ]
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  voiceType: { type: 'string' }
+                },
+                required: ['voiceType']
+              }
             },
             {
               name: 'play_audio',
@@ -232,7 +259,15 @@ export class MCPRestServer {
               arguments: [
                 { name: 'inputFilePath', description: 'Path to audio file to play', required: true },
                 { name: 'isUrl', description: 'Whether audio file is a URL', required: false }
-              ]
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  inputFilePath: { type: 'string' },
+                  isUrl: { type: 'boolean' }
+                },
+                required: ['inputFilePath']
+              }
             },
             {
               name: 'text_to_image',
@@ -245,19 +280,48 @@ export class MCPRestServer {
                 { name: 'promptOptimizer', description: 'Whether to optimize prompt', required: false },
                 { name: 'outputDirectory', description: 'Directory to save output file', required: false },
                 { name: 'outputFile', description: 'Output file path, auto-generated if not provided', required: false }
-              ]
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  prompt: { type: 'string' },
+                  model: { type: 'string' },
+                  aspectRatio: { type: 'string' },
+                  n: { type: 'number' },
+                  promptOptimizer: { type: 'boolean' },
+                  outputDirectory: { type: 'string' },
+                  outputFile: { type: 'string' }
+                },
+                required: ['prompt']
+              }
             },
             {
               name: 'generate_video',
               description: 'Generate video based on text prompt',
               arguments: [
                 { name: 'prompt', description: 'Text prompt for video generation', required: true },
-                { name: 'model', description: 'Model to use, values: ["T2V-01", "T2V-01-Director", "I2V-01", "I2V-01-Director", "I2V-01-live"]', required: false },
+                { name: 'model', description: 'Model to use, values: ["T2V-01", "T2V-01-Director", "I2V-01", "I2V-01-Director", "I2V-01-live", "MiniMax-Hailuo-02"]', required: false },
                 { name: 'firstFrameImage', description: 'First frame image', required: false },
                 { name: 'outputDirectory', description: 'Directory to save output file', required: false },
                 { name: 'outputFile', description: 'Output file path, auto-generated if not provided', required: false },
-                { name: 'async_mode', description: 'Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result', required: false }
-              ]
+                { name: 'async_mode', description: 'Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result', required: false },
+                { name: 'resolution', description: 'The resolution of the video. The model must be "MiniMax-Hailuo-02". Values range ["768P", "1080P"]', required: false },
+                { name: 'duration', description: 'The duration of the video. The model must be "MiniMax-Hailuo-02". Values can be 6 and 10.', required: false },
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  prompt: { type: 'string' },
+                  model: { type: 'string' },
+                  firstFrameImage: { type: 'string' },
+                  outputDirectory: { type: 'string' },
+                  outputFile: { type: 'string' },
+                  async_mode: { type: 'boolean' },
+                  resolution: { type: 'string' },
+                  duration: { type: 'number' }
+                },
+                required: ['prompt']
+              }
             },
             {
               name: 'voice_clone',
@@ -268,7 +332,18 @@ export class MCPRestServer {
                 { name: 'text', description: 'Text for demo audio', required: false },
                 { name: 'outputDirectory', description: 'Directory to save output file', required: false },
                 { name: 'isUrl', description: 'Whether audio file is a URL', required: false }
-              ]
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  voiceId: { type: 'string' },
+                  audioFile: { type: 'string' },
+                  text: { type: 'string' },
+                  outputDirectory: { type: 'string' },
+                  isUrl: { type: 'boolean' }
+                },
+                required: ['voiceId', 'audioFile']
+              }
             },
             {
               name: 'image_to_video',
@@ -280,7 +355,63 @@ export class MCPRestServer {
                 { name: 'outputDirectory', description: 'Directory to save output file', required: false },
                 { name: 'outputFile', description: 'Output file path, auto-generated if not provided', required: false },
                 { name: 'async_mode', description: 'Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result', required: false }
-              ]
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  prompt: { type: 'string' },
+                  firstFrameImage: { type: 'string' },
+                  model: { type: 'string' },
+                  outputDirectory: { type: 'string' },
+                  outputFile: { type: 'string' },
+                  async_mode: { type: 'boolean' }
+                },
+                required: ['prompt', 'firstFrameImage']
+              }
+            },
+            {
+              name: 'music_generation',
+              description: 'Generate music based on text prompt and lyrics',
+              arguments: [
+                { name: 'prompt', description: 'Music creation inspiration describing style, mood, scene, etc.', required: true },
+                { name: 'lyrics', description: 'Song lyrics for music generation.\nUse newline (\\n) to separate each line of lyrics. Supports lyric structure tags [Intro][Verse][Chorus][Bridge][Outro]\nto enhance musicality. Character range: [10, 600] (each Chinese character, punctuation, and letter counts as 1 character)', required: true },
+                { name: 'sampleRate', description: 'Sample rate of generated music', required: false },
+                { name: 'bitrate', description: 'Bitrate of generated music', required: false },
+                { name: 'format', description: 'Format of generated music', required: false },
+                { name: 'outputDirectory', description: 'Directory to save output file', required: false }
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  prompt: { type: 'string' },
+                  lyrics: { type: 'string' },
+                  sampleRate: { type: 'number' },
+                  bitrate: { type: 'number' },
+                  format: { type: 'string' },
+                  outputDirectory: { type: 'string' }
+                },
+                required: ['prompt', 'lyrics']
+              }
+            },
+            {
+              name: 'voice_design',
+              description: 'Generate a voice based on description prompts',
+              arguments: [
+                { name: 'prompt', description: 'The prompt to generate the voice from', required: true },
+                { name: 'previewText', description: 'The text to preview the voice', required: true },
+                { name: 'voiceId', description: 'The id of the voice to use', required: false },
+                { name: 'outputDirectory', description: 'Directory to save output file', required: false }
+              ],
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  prompt: { type: 'string' },
+                  previewText: { type: 'string' },
+                  voiceId: { type: 'string' },
+                  outputDirectory: { type: 'string' }
+                },
+                required: ['prompt', 'previewText']
+              }
             }
           ]
         };
@@ -332,6 +463,12 @@ export class MCPRestServer {
 
           case 'query_video_generation':
             return await this.handleVideoGenerationQuery(toolParams, requestApi, mediaService);
+          
+          case 'music_generation':
+            return await this.handleGenerateMusic(toolParams, requestApi, mediaService);
+
+          case 'voice_design':
+            return await this.handleVoiceDesign(toolParams, requestApi, mediaService);
 
           default:
             throw new Error(`Unknown tool: ${toolName}`);
@@ -520,6 +657,32 @@ export class MCPRestServer {
       return result;
     } catch (error) {
       throw this.wrapError('Failed to query video generation', error);
+    }
+  }
+
+  /** 
+   * Handle generate music request
+   */
+  private async handleGenerateMusic(args: any, api: MiniMaxAPI, mediaService: MediaService, attempt = 1): Promise<any> {
+    try {
+      // Call media service to handle request
+      const result = await mediaService.generateMusic(args);
+      return result;
+    } catch (error) {
+      throw this.wrapError('Failed to generate music', error);
+    }
+  }
+
+  /** 
+   * Handle voice design request
+   */
+  private async handleVoiceDesign(args: any, api: MiniMaxAPI, mediaService: MediaService, attempt = 1): Promise<any> {
+    try {
+      // Call media service to handle request
+      const result = await mediaService.designVoice(args);
+      return result;
+    } catch (error) {
+      throw this.wrapError('Failed to design voice', error);
     }
   }
 

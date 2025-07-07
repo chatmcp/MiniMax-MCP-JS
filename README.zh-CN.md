@@ -52,6 +52,8 @@ MiniMax MCP JS 是 MiniMax MCP 的 JavaScript/TypeScript 实现，提供图像�
 - 图像生成
 - 视频生成
 - 语音克隆
+- 音乐生成
+- 音色设计
 - 动态配置（支持环境变量和请求参数）
 - 兼容MCP平台托管（ModelScope和其他MCP平台）
 
@@ -254,6 +256,12 @@ MINIMAX_RESOURCE_MODE=url
 <img src="https://public-cdn-video-data-algeng.oss-cn-wulanchabu.aliyuncs.com/gen_image.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle;"/>
 <img src="https://public-cdn-video-data-algeng.oss-cn-wulanchabu.aliyuncs.com/gen_image1.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle; "/>
 
+### 5. 生成音乐
+<img src="https://filecdn.minimax.chat/public/5675b3dc-6789-4ceb-9505-8ef39ae4224f.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle;"/>
+
+### 6. 音色设计
+<img src="https://filecdn.minimax.chat/public/5654f5df-0642-477f-9c5d-b853d185b8b0.png?x-oss-process=image/resize,p_50/format,webp" style="display: inline-block; vertical-align: middle;"/>
+
 ## 可用工具
 
 ### 文本转语音
@@ -337,8 +345,10 @@ MINIMAX_RESOURCE_MODE=url
 
 参数：
 - `prompt`: 视频描述 (必需)
-- `model`: 模型版本，选项为 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01'，默认为 'T2V-01'
+- `model`: 模型版本，选项为 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', 'MiniMax-Hailuo-02', 默认为 'T2V-01'
 - `firstFrameImage`: 第一帧图像路径 (可选)
+- `duration`: 视频时长秒数。模型必须是 "MiniMax-Hailuo-02"。值可以是 6 和 10。（可选）
+- `resolution`: 视频分辨率。模型必须是 "MiniMax-Hailuo-02"。值范围为 ["768P", "1080P"]。（可选）
 - `outputDirectory`: 保存输出文件的目录 (可选)
 - `outputFile`: 保存输出文件的路径 (可选，如果未提供则自动生成)
 - `asyncMode`: 是否使用异步模式。默认为 False。如果为 True，视频生成任务将异步提交并返回任务 ID。需要使用 `query_video_generation` 工具来检查任务状态并获取结果。(可选)
@@ -352,6 +362,33 @@ MINIMAX_RESOURCE_MODE=url
 参数：
 - `taskId`: 要查询的任务 ID。如果 `generate_video` 工具的 `async_mode` 为 True，则应使用其返回的 task_id。(必需)
 - `outputDirectory`: 保存输出文件的目录 (可选)
+
+### 音乐生成
+
+根据提示和歌词生成音乐。
+
+工具名称：`music_generation`
+
+参数：
+- `prompt`: 音乐创作灵感，描述风格、情绪、场景等。例如："流行音乐，悲伤，适合雨夜"。字符范围：[10, 300]。(必需)
+- `lyrics`: 用于音乐生成的歌词。使用换行符 (\\n) 分隔每行歌词。支持歌词结构标签 [Intro] [Verse] [Chorus] [Bridge] [Outro] 以增强音乐性。字符范围：[10, 600]（每个中文字符、标点符号和字母计为1个字符）。(必需)
+- `sampleRate`: 生成音乐的采样率。值：[16000, 24000, 32000, 44100]，默认为 32000。(可选)
+- `bitrate`: 生成音乐的比特率。值：[32000, 64000, 128000, 256000]，默认为 128000。(可选)
+- `format`: 生成音乐的格式。值：["mp3", "wav", "pcm"]，默认为 'mp3'。(可选)
+- `outputDirectory`: 保存输出文件的目录。(可选)
+
+
+### 音色设计
+
+根据描述提示生成音色。
+
+工具名称：`voice_design`
+
+参数：
+- `prompt`: 生成音色的提示。(必需)
+- `previewText`: 预览音色的文本。(必需)
+- `voiceId`: 要使用的音色ID。例如："male-qn-qingse"/"audiobook_female_1"/"cute_boy"/"Charming_Lady"...（可选）
+- `outputDirectory`: 保存输出文件的目录。(可选)
 
 ## 常见问题
 

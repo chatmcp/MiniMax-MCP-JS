@@ -36,6 +36,7 @@ export const DEFAULT_LANGUAGE_BOOST = 'auto';
 export const DEFAULT_TRANSPORT_MODE = TRANSPORT_MODE_STDIO;
 export const DEFAULT_SERVER_PORT = 9593;
 export const DEFAULT_SERVER_ENDPOINT = '/rest';
+export const DEFAULT_MUSIC_MODEL = 'music-1.5';
 
 // Error messages
 export const ERROR_API_KEY_REQUIRED = 'API_KEY environment variable is required';
@@ -43,9 +44,11 @@ export const ERROR_API_HOST_REQUIRED = 'API_HOST is required';
 export const ERROR_TEXT_REQUIRED = 'Text is required for text-to-speech conversion.';
 export const ERROR_PROMPT_REQUIRED = 'Prompt is required for generation.';
 export const ERROR_AUDIO_FILE_REQUIRED = 'Audio file is required for voice cloning.';
+export const ERROR_LYRICS_REQUIRED = 'Lyrics are required for music generation.';
+export const ERROR_PREVIEW_TEXT_REQUIRED = 'Preview text is required for voice design.';
 
 // Default Values
-export const VALID_VIDEO_MODELS = ['T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01'];
+export const VALID_VIDEO_MODELS = ['T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', "MiniMax-Hailuo-02"];
 export const VALID_IMAGE_MODELS = ['image-01'];
 
 

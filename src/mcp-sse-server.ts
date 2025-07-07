@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
-import { Config } from './types/index.js';
+import { Config, MusicGenerationRequest, VoiceDesignRequest } from './types/index.js';
 import { ConfigManager } from './config/ConfigManager.js';
 import {
   DEFAULT_SERVER_ENDPOINT,
@@ -31,6 +31,8 @@ import { ImageAPI } from './api/image.js';
 import { VideoAPI } from './api/video.js';
 import { VoiceCloneAPI } from './api/voice-clone.js';
 import { VoiceAPI } from './api/voice.js';
+import { MusicAPI } from './api/music.js';
+import { VoiceDesignAPI } from './api/voice-design.js';
 import { playAudio } from './utils/audio.js';
 import { z } from 'zod';
 import 'dotenv/config';
@@ -66,6 +68,8 @@ export class MCPSSEServer {
   private videoApi: VideoAPI;
   private voiceCloneApi: VoiceCloneAPI;
   private voiceApi: VoiceAPI;
+  private musicApi: MusicAPI;
+  private voiceDesignApi: VoiceDesignAPI;
   private connectionMonitorInterval: NodeJS.Timeout | null = null;
 
   /**
@@ -83,7 +87,8 @@ export class MCPSSEServer {
     this.videoApi = new VideoAPI(this.api);
     this.voiceCloneApi = new VoiceCloneAPI(this.api);
     this.voiceApi = new VoiceAPI(this.api);
-
+    this.musicApi = new MusicAPI(this.api);
+    this.voiceDesignApi = new VoiceDesignAPI(this.api);
     // Create MCP server instance
     this.mcpServer = new McpServer({
       name: 'minimax-mcp-js',
@@ -136,6 +141,8 @@ export class MCPSSEServer {
     this.videoApi = new VideoAPI(this.api);
     this.voiceCloneApi = new VoiceCloneAPI(this.api);
     this.voiceApi = new VoiceAPI(this.api);
+    this.musicApi = new MusicAPI(this.api);
+    this.voiceDesignApi = new VoiceDesignAPI(this.api);
 
     // console.log(`[${new Date().toISOString()}] SSE server configuration updated`);
   }
@@ -152,6 +159,8 @@ export class MCPSSEServer {
     this.registerGenerateVideoTool();
     this.registerImageToVideoTool();
     this.registerQueryVideoGenerationTool();
+    this.registerMusicGenerationTool();
+    this.registerVoiceDesignTool();
   }
 
   /**
@@ -498,9 +507,11 @@ export class MCPSSEServer {
           .string()
           .optional()
           .default(DEFAULT_T2V_MODEL)
-          .describe('Model to use, values: ["T2V-01", "T2V-01-Director", "I2V-01", "I2V-01-Director", "I2V-01-live"]'),
+          .describe('Model to use, values: ["T2V-01", "T2V-01-Director", "I2V-01", "I2V-01-Director", "I2V-01-live", "MiniMax-Hailuo-02"]'),
         prompt: z.string().describe('Text prompt for video generation'),
         firstFrameImage: z.string().optional().describe('First frame image'),
+        duration: z.number().optional().describe('The duration of the video. The model must be "MiniMax-Hailuo-02". Values can be 6 and 10.'),
+        resolution: z.string().optional().describe('The resolution of the video. The model must be "MiniMax-Hailuo-02". Values range ["768P", "1080P"]'),
         outputDirectory: z.string().optional().describe('Directory to save the output file'),
         outputFile: z
           .string()
@@ -705,6 +716,142 @@ export class MCPSSEServer {
               {
                 type: 'text',
                 text: `Failed to query video generation: ${error instanceof Error ? error.message : String(error)}`,
+              },
+            ],
+          };
+        }
+      },
+    );
+  }
+
+
+  /**
+   * Register music generation tool 
+   */
+  private registerMusicGenerationTool(): void {
+    this.mcpServer.tool(
+      'music_generation',
+      'Create a music generation task using AI models. Generate music from prompt and lyrics.\n\nNote: This tool calls MiniMax API and may incur costs. Use only when explicitly requested by the user.',
+      {
+        prompt: z
+          .string()
+          .describe('Music creation inspiration describing style, mood, scene, etc.\nExample: "Pop music, sad, suitable for rainy nights". Character range: [10, 300]'),
+        lyrics: z
+          .string()
+          .describe('Song lyrics for music generation.\nUse newline (\\n) to separate each line of lyrics. Supports lyric structure tags [Intro][Verse][Chorus][Bridge][Outro]\nto enhance musicality. Character range: [10, 600] (each Chinese character, punctuation, and letter counts as 1 character)'),
+        sampleRate: z
+          .number()
+          .optional()
+          .default(DEFAULT_SAMPLE_RATE)
+          .describe('Sample rate of generated music. Values: [16000, 24000, 32000, 44100]'),
+        bitrate: z
+          .number()
+          .optional()
+          .default(DEFAULT_BITRATE)
+          .describe('Bitrate of generated music. Values: [32000, 64000, 128000, 256000]'),
+        format: z
+          .string()
+          .optional()
+          .default(DEFAULT_FORMAT)
+          .describe('Format of generated music. Values: ["mp3", "wav", "pcm"]'),
+        outputDirectory: z
+          .string()
+          .optional()
+          .describe('The directory to save the output file'),
+      },
+      async (params: MusicGenerationRequest) => {
+        try {
+          // No need to update configuration from request parameters in stdio mode
+          const outputFile = await this.musicApi.generateMusic(params);
+
+          // Handle different output formats
+          if (this.config.resourceMode === RESOURCE_MODE_URL) {
+            return {
+              content: [
+                {
+                  type: 'text',
+                  text: `Success. Music URL(s): ${outputFile}`,
+                },
+              ],
+            };
+          } else {
+            return {
+              content: [
+                {
+                  type: 'text',
+                  text: `Success. Music saved as: ${outputFile}`,
+                },
+              ],
+            };
+          }
+        } catch (error) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `Failed to generate music: ${error instanceof Error ? error.message : String(error)}`,
+              },
+            ],
+          };
+        }
+      },
+    );  
+  }
+
+  /** 
+   * Register voice design tool
+   */
+  private registerVoiceDesignTool(): void {
+    this.mcpServer.tool(
+      'voice_design',
+      'Generate a voice based on description prompts.\n\nNote: This tool calls MiniMax API and may incur costs. Use only when explicitly requested by the user.',
+      {
+        prompt: z
+          .string()
+          .describe('The prompt to generate the voice from'),
+        previewText: z
+          .string()
+          .describe('The text to preview the voice'),
+        voiceId: z
+          .string()
+          .optional()
+          .describe('The id of the voice to use. For example, "male-qn-qingse"/"audiobook_female_1"/"cute_boy"/"Charming_Lady"...',),
+        outputDirectory: z
+          .string()
+          .optional()
+          .describe('The directory to save the output file'),
+      },
+      async (params: VoiceDesignRequest) => {
+        try {
+          // No need to update configuration from request parameters in stdio mode
+          const { voiceId, outputFile } = await this.voiceDesignApi.voiceDesign(params);
+
+          // Handle different output formats
+          if (this.config.resourceMode === RESOURCE_MODE_URL) {
+            return {
+              content: [
+                {
+                  type: 'text',
+                  text: `Success. Voice ID: ${voiceId}. Voice URL: ${outputFile}`,
+                },
+              ],
+            };
+          } else {
+            return {
+              content: [
+                {
+                  type: 'text',
+                  text: `Success. Voice ID: ${voiceId}. Voice saved as: ${outputFile}`,
+                },
+              ],
+            };
+          }
+        } catch (error) {
+          return {  
+            content: [
+              {
+                type: 'text',
+                text: `Failed to design voice: ${error instanceof Error ? error.message : String(error)}`,
               },
             ],
           };

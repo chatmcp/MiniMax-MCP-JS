@@ -39,6 +39,7 @@ export interface VideoGenerationRequest {
   firstFrameImage?: string;
   outputFile?: string;
   outputDirectory?: string;
+  resolution?: string;
   asyncMode?: boolean;
 }
 
@@ -64,6 +65,23 @@ export interface ListVoicesRequest {
 export interface PlayAudioRequest {
   inputFilePath: string;
   isUrl?: boolean;
+}
+
+export interface MusicGenerationRequest {
+  prompt: string;
+  lyrics: string;
+  sampleRate?: number;
+  bitrate?: number;
+  format?: string;
+  channel?: number;
+  outputDirectory?: string;
+}
+
+export interface VoiceDesignRequest {
+  prompt: string;
+  previewText: string;
+  voiceId?: string;
+  outputDirectory?: string;
 }
 
 export type TransportMode = 'stdio' | 'rest' | 'sse';
