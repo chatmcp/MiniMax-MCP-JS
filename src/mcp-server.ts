@@ -27,7 +27,7 @@ import {
   DEFAULT_SPEECH_MODEL,
   DEFAULT_SPEED,
   DEFAULT_T2I_MODEL,
-  DEFAULT_T2V_MODEL,
+  DEFAULT_VIDEO_MODEL,
   DEFAULT_VOICE_ID,
   DEFAULT_VOLUME,
   ENV_CONFIG_PATH,
@@ -465,7 +465,7 @@ export class MCPServer {
         model: z
           .string()
           .optional()
-          .default(DEFAULT_T2V_MODEL)
+          .default(DEFAULT_VIDEO_MODEL)
           .describe('Model to use, values: ["T2V-01", "T2V-01-Director", "I2V-01", "I2V-01-Director", "I2V-01-live", "MiniMax-Hailuo-02"]'),
         prompt: z.string().describe('Text prompt for video generation'),
         firstFrameImage: z.string().optional().describe('First frame image'),

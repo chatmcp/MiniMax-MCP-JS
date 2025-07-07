@@ -37,6 +37,7 @@ export const DEFAULT_TRANSPORT_MODE = TRANSPORT_MODE_STDIO;
 export const DEFAULT_SERVER_PORT = 9593;
 export const DEFAULT_SERVER_ENDPOINT = '/rest';
 export const DEFAULT_MUSIC_MODEL = 'music-1.5';
+export const DEFAULT_VIDEO_MODEL = 'MiniMax-Hailuo-02';
 
 // Error messages
 export const ERROR_API_KEY_REQUIRED = 'API_KEY environment variable is required';

@@ -347,7 +347,7 @@ Tool Name: `generate_video`
 
 Parameters:
 - `prompt`: Video description (required)
-- `model`: Model version, options are 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', 'MiniMax-Hailuo-02', default is 'T2V-01'
+- `model`: Model version, options are 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', 'MiniMax-Hailuo-02', default is 'MiniMax-Hailuo-02'
 - `firstFrameImage`: Path to first frame image (optional)
 - `duration`: The duration of the video. The model must be "MiniMax-Hailuo-02". Values can be 6 and 10. (optional)
 - `resolution`: The resolution of the video. The model must be "MiniMax-Hailuo-02". Values range ["768P", "1080P"]. (optional)

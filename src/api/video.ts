@@ -1,7 +1,7 @@
 import { MiniMaxAPI } from '../utils/api.js';
 import { VideoGenerationQueryRequest, VideoGenerationRequest } from '../types/index.js';
 import { MinimaxRequestError } from '../exceptions/index.js';
-import { DEFAULT_T2V_MODEL, ERROR_PROMPT_REQUIRED, RESOURCE_MODE_URL, VALID_VIDEO_MODELS } from '../const/index.js';
+import { DEFAULT_VIDEO_MODEL, ERROR_PROMPT_REQUIRED, RESOURCE_MODE_URL, VALID_VIDEO_MODELS } from '../const/index.js';
 import * as path from 'path';
 import * as fs from 'fs';
 import { buildOutputFile } from '../utils/file.js';
@@ -214,13 +214,13 @@ export class VideoAPI {
   private ensureValidModel(model?: string): string {
     // If no model provided, use default
     if (!model) {
-      return DEFAULT_T2V_MODEL;
+      return DEFAULT_VIDEO_MODEL;
     }
 
     // Check if model is valid
     if (!VALID_VIDEO_MODELS.includes(model)) {
-      // console.error(`Warning: Provided model ${model} is invalid, using default value ${DEFAULT_T2V_MODEL}`);
-      return DEFAULT_T2V_MODEL;
+      // console.error(`Warning: Provided model ${model} is invalid, using default value ${DEFAULT_VIDEO_MODEL}`);
+      return DEFAULT_VIDEO_MODEL;
     }
 
     return model;

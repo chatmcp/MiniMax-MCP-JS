@@ -345,7 +345,7 @@ MINIMAX_RESOURCE_MODE=url
 
 参数：
 - `prompt`: 视频描述 (必需)
-- `model`: 模型版本，选项为 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', 'MiniMax-Hailuo-02', 默认为 'T2V-01'
+- `model`: 模型版本，选项为 'T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-01-Director', 'I2V-01-live', 'S2V-01', 'MiniMax-Hailuo-02', 默认为 'MiniMax-Hailuo-02'
 - `firstFrameImage`: 第一帧图像路径 (可选)
 - `duration`: 视频时长秒数。模型必须是 "MiniMax-Hailuo-02"。值可以是 6 和 10。（可选）
 - `resolution`: 视频分辨率。模型必须是 "MiniMax-Hailuo-02"。值范围为 ["768P", "1080P"]。（可选）

@@ -23,7 +23,7 @@ import {
   DEFAULT_CHANNEL,
   DEFAULT_LANGUAGE_BOOST,
   DEFAULT_T2I_MODEL,
-  DEFAULT_T2V_MODEL
+  DEFAULT_VIDEO_MODEL
 } from './const/index.js';
 import { MiniMaxAPI } from './utils/api.js';
 import { TTSAPI } from './api/tts.js';
@@ -506,7 +506,7 @@ export class MCPSSEServer {
         model: z
           .string()
           .optional()
-          .default(DEFAULT_T2V_MODEL)
+          .default(DEFAULT_VIDEO_MODEL)
           .describe('Model to use, values: ["T2V-01", "T2V-01-Director", "I2V-01", "I2V-01-Director", "I2V-01-live", "MiniMax-Hailuo-02"]'),
         prompt: z.string().describe('Text prompt for video generation'),
         firstFrameImage: z.string().optional().describe('First frame image'),
