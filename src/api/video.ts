@@ -1,7 +1,7 @@
 import { MiniMaxAPI } from '../utils/api.js';
 import { VideoGenerationQueryRequest, VideoGenerationRequest } from '../types/index.js';
 import { MinimaxRequestError } from '../exceptions/index.js';
-import { DEFAULT_T2V_MODEL, ERROR_PROMPT_REQUIRED, RESOURCE_MODE_URL, VALID_VIDEO_MODELS } from '../const/index.js';
+import { DEFAULT_VIDEO_MODEL, ERROR_PROMPT_REQUIRED, RESOURCE_MODE_URL, VALID_VIDEO_MODELS } from '../const/index.js';
 import * as path from 'path';
 import * as fs from 'fs';
 import { buildOutputFile } from '../utils/file.js';
@@ -49,6 +49,16 @@ export class VideoAPI {
         }
       }
 
+      // Process resolution
+      if (request.resolution) {
+        requestData.resolution = request.resolution;
+      }
+
+      // Process duration
+      if (request.duration) {
+        requestData.duration = request.duration;
+      }
+
       // Step 1: Submit video generation task
       const response = await this.api.post<any>('/v1/video_generation', requestData);
 
@@ -66,7 +76,7 @@ export class VideoAPI {
 
       // Step 2: Wait for video generation task to complete
       let fileId: string | null = null;
-      const maxRetries = 30; // Maximum 30 attempts, total duration 10 minutes (30 * 20 seconds)
+      const maxRetries = model === "MiniMax-Hailuo-02" ? 60 : 30; // Maximum 30 attempts, total duration 10 minutes (30 * 20 seconds). MiniMax-Hailuo-02 model has a longer processing time, so we need to wait for a longer time
       const retryInterval = 20; // 20 second interval
 
       for (let attempt = 0; attempt < maxRetries; attempt++) {
@@ -204,13 +214,13 @@ export class VideoAPI {
   private ensureValidModel(model?: string): string {
     // If no model provided, use default
     if (!model) {
-      return DEFAULT_T2V_MODEL;
+      return DEFAULT_VIDEO_MODEL;
     }
 
     // Check if model is valid
     if (!VALID_VIDEO_MODELS.includes(model)) {
-      // console.error(`Warning: Provided model ${model} is invalid, using default value ${DEFAULT_T2V_MODEL}`);
-      return DEFAULT_T2V_MODEL;
+      // console.error(`Warning: Provided model ${model} is invalid, using default value ${DEFAULT_VIDEO_MODEL}`);
+      return DEFAULT_VIDEO_MODEL;
     }
 
     return model;
