@@ -287,7 +287,7 @@ MINIMAX_RESOURCE_MODE=url
 - `pronunciationDict`: 发音词典
 - `stream`: 启用流式输出
 - `subtitleEnable`: 启用字幕生成
-- `outputDirectory`: 保存输出文件的目录 (可选)
+- `outputDirectory`: 保存输出文件的目录。 `outputDirectory` 是相对于 `MINIMAX_MCP_BASE_PATH`（或配置中的 `basePath`）的。最终的保存路径是 `${basePath}/${outputDirectory}`, 例如, 如果 `MINIMAX_MCP_BASE_PATH=~/Desktop` 且 `outputDirectory=workspace`，则输出将被保存到 `~/Desktop/workspace/` (可选)
 - `outputFile`: 保存输出文件的路径 (可选，如果未提供则自动生成)
 
 ### 语音克隆
@@ -300,7 +300,7 @@ MINIMAX_RESOURCE_MODE=url
 - `audioFile`: 音频文件路径 (必需)
 - `voiceId`: 语音 ID (必需)
 - `text`: 演示音频的文本 (可选)
-- `outputDirectory`: 保存输出文件的目录 (可选)
+- `outputDirectory`: 保存输出文件的目录。 `outputDirectory` 是相对于 `MINIMAX_MCP_BASE_PATH`（或配置中的 `basePath`）的。最终的保存路径是 `${basePath}/${outputDirectory}`, 例如, 如果 `MINIMAX_MCP_BASE_PATH=~/Desktop` 且 `outputDirectory=workspace`，则输出将被保存到 `~/Desktop/workspace/` (可选)
 
 ### 列出所有语音类型
 
@@ -334,7 +334,7 @@ MINIMAX_RESOURCE_MODE=url
 - `n`: 生成图像数量，范围 1-9，默认为 1
 - `promptOptimizer`: 是否优化提示，默认为 true
 - `subjectReference`: 角色参考的本地图像文件路径或公共 URL (可选)
-- `outputDirectory`: 保存输出文件的目录 (可选)
+- `outputDirectory`: 保存输出文件的目录。 `outputDirectory` 是相对于 `MINIMAX_MCP_BASE_PATH`（或配置中的 `basePath`）的。最终的保存路径是 `${basePath}/${outputDirectory}`, 例如, 如果 `MINIMAX_MCP_BASE_PATH=~/Desktop` 且 `outputDirectory=workspace`，则输出将被保存到 `~/Desktop/workspace/` (可选)
 - `outputFile`: 保存输出文件的路径 (可选，如果未提供则自动生成)
 
 ### 生成视频
@@ -349,7 +349,7 @@ MINIMAX_RESOURCE_MODE=url
 - `firstFrameImage`: 第一帧图像路径 (可选)
 - `duration`: 视频时长秒数。模型必须是 "MiniMax-Hailuo-02"。值可以是 6 和 10。（可选）
 - `resolution`: 视频分辨率。模型必须是 "MiniMax-Hailuo-02"。值范围为 ["768P", "1080P"]。（可选）
-- `outputDirectory`: 保存输出文件的目录 (可选)
+- `outputDirectory`: 保存输出文件的目录。 `outputDirectory` 是相对于 `MINIMAX_MCP_BASE_PATH`（或配置中的 `basePath`）的。最终的保存路径是 `${basePath}/${outputDirectory}`, 例如, 如果 `MINIMAX_MCP_BASE_PATH=~/Desktop` 且 `outputDirectory=workspace`，则输出将被保存到 `~/Desktop/workspace/` (可选)
 - `outputFile`: 保存输出文件的路径 (可选，如果未提供则自动生成)
 - `asyncMode`: 是否使用异步模式。默认为 False。如果为 True，视频生成任务将异步提交并返回任务 ID。需要使用 `query_video_generation` 工具来检查任务状态并获取结果。(可选)
 
@@ -361,7 +361,7 @@ MINIMAX_RESOURCE_MODE=url
 
 参数：
 - `taskId`: 要查询的任务 ID。如果 `generate_video` 工具的 `async_mode` 为 True，则应使用其返回的 task_id。(必需)
-- `outputDirectory`: 保存输出文件的目录 (可选)
+- `outputDirectory`: 保存输出文件的目录。 `outputDirectory` 是相对于 `MINIMAX_MCP_BASE_PATH`（或配置中的 `basePath`）的。最终的保存路径是 `${basePath}/${outputDirectory}`, 例如, 如果 `MINIMAX_MCP_BASE_PATH=~/Desktop` 且 `outputDirectory=workspace`，则输出将被保存到 `~/Desktop/workspace/` (可选)
 
 ### 音乐生成
 
@@ -375,7 +375,7 @@ MINIMAX_RESOURCE_MODE=url
 - `sampleRate`: 生成音乐的采样率。值：[16000, 24000, 32000, 44100]，默认为 32000。(可选)
 - `bitrate`: 生成音乐的比特率。值：[32000, 64000, 128000, 256000]，默认为 128000。(可选)
 - `format`: 生成音乐的格式。值：["mp3", "wav", "pcm"]，默认为 'mp3'。(可选)
-- `outputDirectory`: 保存输出文件的目录。(可选)
+- `outputDirectory`: 保存输出文件的目录。 `outputDirectory` 是相对于 `MINIMAX_MCP_BASE_PATH`（或配置中的 `basePath`）的。最终的保存路径是 `${basePath}/${outputDirectory}`, 例如, 如果 `MINIMAX_MCP_BASE_PATH=~/Desktop` 且 `outputDirectory=workspace`，则输出将被保存到 `~/Desktop/workspace/` (可选)
 
 
 ### 音色设计
@@ -388,7 +388,7 @@ MINIMAX_RESOURCE_MODE=url
 - `prompt`: 生成音色的提示。(必需)
 - `previewText`: 预览音色的文本。(必需)
 - `voiceId`: 要使用的音色ID。例如："male-qn-qingse"/"audiobook_female_1"/"cute_boy"/"Charming_Lady"...（可选）
-- `outputDirectory`: 保存输出文件的目录。(可选)
+- `outputDirectory`: 保存输出文件的目录。 `outputDirectory` 是相对于 `MINIMAX_MCP_BASE_PATH`（或配置中的 `basePath`）的。最终的保存路径是 `${basePath}/${outputDirectory}`, 例如, 如果 `MINIMAX_MCP_BASE_PATH=~/Desktop` 且 `outputDirectory=workspace`，则输出将被保存到 `~/Desktop/workspace/` (可选)
 
 ## 常见问题
 

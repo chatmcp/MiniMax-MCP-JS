@@ -1,4 +1,8 @@
-export interface TTSRequest {
+export interface BaseToolRequest {
+  outputDirectory?: string;
+}
+
+export interface TTSRequest extends BaseToolRequest {
   text: string;
   model?: string;
   voiceId?: string;
@@ -17,10 +21,9 @@ export interface TTSRequest {
   subtitleEnable?: boolean;
   outputFormat?: string;
   outputFile?: string;
-  outputDirectory?: string;
 }
 
-export interface ImageGenerationRequest {
+export interface ImageGenerationRequest extends BaseToolRequest {
   prompt: string;
   model?: string;
   aspectRatio?: string;
@@ -28,33 +31,29 @@ export interface ImageGenerationRequest {
   promptOptimizer?: boolean;
   outputFile?: string;
   subjectReference?: string;
-  outputDirectory?: string;
 }
 
-export interface VideoGenerationRequest {
+export interface VideoGenerationRequest extends BaseToolRequest {
   prompt: string;
   model?: string;
   duration?: number;
   fps?: number;
   firstFrameImage?: string;
   outputFile?: string;
-  outputDirectory?: string;
   resolution?: string;
   asyncMode?: boolean;
 }
 
-export interface VideoGenerationQueryRequest {
+export interface VideoGenerationQueryRequest extends BaseToolRequest {
   taskId: string;
-  outputDirectory?: string;
 }
 
-export interface VoiceCloneRequest {
+export interface VoiceCloneRequest extends BaseToolRequest {
   audioFile: string;
   voiceId: string;
   text?: string;
   name?: string;
   description?: string;
-  outputDirectory?: string;
   isUrl?: boolean;
 }
 
@@ -67,21 +66,19 @@ export interface PlayAudioRequest {
   isUrl?: boolean;
 }
 
-export interface MusicGenerationRequest {
+export interface MusicGenerationRequest extends BaseToolRequest {
   prompt: string;
   lyrics: string;
   sampleRate?: number;
   bitrate?: number;
   format?: string;
   channel?: number;
-  outputDirectory?: string;
 }
 
-export interface VoiceDesignRequest {
+export interface VoiceDesignRequest extends BaseToolRequest {
   prompt: string;
   previewText: string;
   voiceId?: string;
-  outputDirectory?: string;
 }
 
 export type TransportMode = 'stdio' | 'rest' | 'sse';

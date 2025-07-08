@@ -23,7 +23,7 @@ function expandHomeDir(filepath: string): string {
  */
 export function buildOutputPath(dir?: string): string {
   const BASE_PATH = expandHomeDir(ConfigManager.getConfig().basePath!);
-  const outputPath = dir || BASE_PATH;
+  const outputPath = dir ? path.join(BASE_PATH, dir) : BASE_PATH;
 
   if (!fs.existsSync(outputPath)) {
     try {

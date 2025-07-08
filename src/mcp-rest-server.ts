@@ -7,7 +7,8 @@ import {
   ERROR_API_KEY_REQUIRED,
   ERROR_API_HOST_REQUIRED,
   RESOURCE_MODE_URL,
-  TRANSPORT_MODE_REST
+  TRANSPORT_MODE_REST,
+  OUTPUT_DIRECTORY_DESCRIPTION,
 } from './const/index.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import {
@@ -23,6 +24,7 @@ import { ServiceManager } from './services/index.js';
 import { MediaService } from './services/media-service.js';
 import { MiniMaxAPI } from './utils/api.js';
 import { ConfigManager } from './config/ConfigManager.js';
+import { COMMON_REST_ARGUMENTS, COMMON_REST_INPUT_SCHEMA_PROPERTIES } from './schema/index.js';
 
 // Retry configuration
 const MAX_RETRY_ATTEMPTS = 3;
@@ -204,7 +206,7 @@ export class MCPRestServer {
               description: 'Convert text to audio',
               arguments: [
                 { name: 'text', description: 'Text to convert to audio', required: true },
-                { name: 'outputDirectory', description: 'Directory to save output file', required: false },
+                { name: 'outputDirectory', description: OUTPUT_DIRECTORY_DESCRIPTION, required: false },
                 { name: 'voiceId', description: 'Voice ID to use, e.g. "female-shaonv"', required: false },
                 { name: 'model', description: 'Model to use', required: false },
                 { name: 'speed', description: 'Speech speed (0.5-2.0)', required: false },
@@ -278,7 +280,7 @@ export class MCPRestServer {
                 { name: 'aspectRatio', description: 'Image aspect ratio, values: ["1:1", "16:9","4:3", "3:2", "2:3", "3:4", "9:16", "21:9"]', required: false },
                 { name: 'n', description: 'Number of images to generate (1-9)', required: false },
                 { name: 'promptOptimizer', description: 'Whether to optimize prompt', required: false },
-                { name: 'outputDirectory', description: 'Directory to save output file', required: false },
+                { name: 'outputDirectory', description: OUTPUT_DIRECTORY_DESCRIPTION, required: false },
                 { name: 'outputFile', description: 'Output file path, auto-generated if not provided', required: false }
               ],
               inputSchema: {
@@ -302,7 +304,7 @@ export class MCPRestServer {
                 { name: 'prompt', description: 'Text prompt for video generation', required: true },
                 { name: 'model', description: 'Model to use, values: ["T2V-01", "T2V-01-Director", "I2V-01", "I2V-01-Director", "I2V-01-live", "MiniMax-Hailuo-02"]', required: false },
                 { name: 'firstFrameImage', description: 'First frame image', required: false },
-                { name: 'outputDirectory', description: 'Directory to save output file', required: false },
+                { name: 'outputDirectory', description: OUTPUT_DIRECTORY_DESCRIPTION, required: false },
                 { name: 'outputFile', description: 'Output file path, auto-generated if not provided', required: false },
                 { name: 'async_mode', description: 'Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result', required: false },
                 { name: 'resolution', description: 'The resolution of the video. The model must be "MiniMax-Hailuo-02". Values range ["768P", "1080P"]', required: false },
@@ -330,7 +332,7 @@ export class MCPRestServer {
                 { name: 'voiceId', description: 'Voice ID to use', required: true },
                 { name: 'audioFile', description: 'Audio file path', required: true },
                 { name: 'text', description: 'Text for demo audio', required: false },
-                { name: 'outputDirectory', description: 'Directory to save output file', required: false },
+                { name: 'outputDirectory', description: OUTPUT_DIRECTORY_DESCRIPTION, required: false },
                 { name: 'isUrl', description: 'Whether audio file is a URL', required: false }
               ],
               inputSchema: {
@@ -352,7 +354,7 @@ export class MCPRestServer {
                 { name: 'prompt', description: 'Text prompt for video generation', required: true },
                 { name: 'firstFrameImage', description: 'Path to first frame image', required: true },
                 { name: 'model', description: 'Model to use, values: ["I2V-01", "I2V-01-Director", "I2V-01-live"]', required: false },
-                { name: 'outputDirectory', description: 'Directory to save output file', required: false },
+                { name: 'outputDirectory', description: OUTPUT_DIRECTORY_DESCRIPTION, required: false },
                 { name: 'outputFile', description: 'Output file path, auto-generated if not provided', required: false },
                 { name: 'async_mode', description: 'Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result', required: false }
               ],
@@ -378,7 +380,7 @@ export class MCPRestServer {
                 { name: 'sampleRate', description: 'Sample rate of generated music', required: false },
                 { name: 'bitrate', description: 'Bitrate of generated music', required: false },
                 { name: 'format', description: 'Format of generated music', required: false },
-                { name: 'outputDirectory', description: 'Directory to save output file', required: false }
+                { name: 'outputDirectory', description: OUTPUT_DIRECTORY_DESCRIPTION, required: false }
               ],
               inputSchema: {
                 type: 'object',
@@ -400,7 +402,7 @@ export class MCPRestServer {
                 { name: 'prompt', description: 'The prompt to generate the voice from', required: true },
                 { name: 'previewText', description: 'The text to preview the voice', required: true },
                 { name: 'voiceId', description: 'The id of the voice to use', required: false },
-                { name: 'outputDirectory', description: 'Directory to save output file', required: false }
+                { name: 'outputDirectory', description: OUTPUT_DIRECTORY_DESCRIPTION, required: false }
               ],
               inputSchema: {
                 type: 'object',
