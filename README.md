@@ -297,7 +297,7 @@ Parameters:
 - `pronunciationDict`: Pronunciation dictionary
 - `stream`: Enable streaming output
 - `subtitleEnable`: Enable subtitle generation
-- `outputDirectory`: Directory to save the output file (optional)
+- `outputDirectory`: Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 - `outputFile`: Path to save the output file (optional, auto-generated if not provided)
 
 ### Play Audio
@@ -320,7 +320,7 @@ Parameters:
 - `audioFile`: Path to audio file (required)
 - `voiceId`: Voice ID (required)
 - `text`: Text for demo audio (optional)
-- `outputDirectory`: Directory to save the output file (optional)
+- `outputDirectory`: Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 
 ### Text to Image
 
@@ -335,7 +335,7 @@ Parameters:
 - `n`: Number of images to generate, range 1-9, default is 1
 - `promptOptimizer`: Whether to optimize the prompt, default is true
 - `subjectReference`: Path to local image file or public URL for character reference (optional)
-- `outputDirectory`: Directory to save the output file (optional)
+- `outputDirectory`: Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 - `outputFile`: Path to save the output file (optional, auto-generated if not provided)
 - `asyncMode`: Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result. (optional)
 
@@ -351,7 +351,7 @@ Parameters:
 - `firstFrameImage`: Path to first frame image (optional)
 - `duration`: The duration of the video. The model must be "MiniMax-Hailuo-02". Values can be 6 and 10. (optional)
 - `resolution`: The resolution of the video. The model must be "MiniMax-Hailuo-02". Values range ["768P", "1080P"]. (optional)
-- `outputDirectory`: Directory to save the output file (optional)
+- `outputDirectory`: Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 - `outputFile`: Path to save the output file (optional, auto-generated if not provided)
 - `asyncMode`: Whether to use async mode. Defaults to False. If True, the video generation task will be submitted asynchronously and the response will return a task_id. Should use `query_video_generation` tool to check the status of the task and get the result. (optional)
 
@@ -363,7 +363,7 @@ Tool Name: `query_video_generation`
 
 Parameters:
 - `taskId`: The Task ID to query. Should be the task_id returned by `generate_video` tool if `async_mode` is True. (required)
-- `outputDirectory`: Directory to save the output file (optional)
+- `outputDirectory`: Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 
 ### Generate Music
 
@@ -377,7 +377,7 @@ Parameters:
 - `sampleRate`: Sample rate of generated music. Values: [16000, 24000, 32000, 44100], default is 32000. (optional)
 - `bitrate`: Bitrate of generated music. Values: [32000, 64000, 128000, 256000], default is 128000. (optional)
 - `format`: Format of generated music. Values: ["mp3", "wav", "pcm"], default is 'mp3'. (optional)
-- `outputDirectory`: The directory to save the output file. (optional)
+- `outputDirectory`: The directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 
 
 ### Voice Design
@@ -390,7 +390,7 @@ Parameters:
 - `prompt`: The prompt to generate the voice from. (required)
 - `previewText`: The text to preview the voice. (required)
 - `voiceId`: The id of the voice to use. For example, "male-qn-qingse"/"audiobook_female_1"/"cute_boy"/"Charming_Lady"... (optional)
-- `outputDirectory`: The directory to save the output file. (optional)
+- `outputDirectory`: The directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 
 ## FAQ
 
