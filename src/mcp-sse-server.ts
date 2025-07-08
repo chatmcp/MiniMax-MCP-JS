@@ -756,8 +756,15 @@ export class MCPSSEServer {
       },
       async (params: MusicGenerationRequest) => {
         try {
+          // Automatically set resource mode (if not specified)
+          const outputFormat = this.config.resourceMode;
+          const musicRequest = {
+            ...params,
+            outputFormat,
+          };
+
           // No need to update configuration from request parameters in stdio mode
-          const outputFile = await this.musicApi.generateMusic(params);
+          const outputFile = await this.musicApi.generateMusic(musicRequest);
 
           // Handle different output formats
           if (this.config.resourceMode === RESOURCE_MODE_URL) {
