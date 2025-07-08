@@ -53,3 +53,6 @@ export const VALID_VIDEO_MODELS = ['T2V-01', 'T2V-01-Director', 'I2V-01', 'I2V-0
 export const VALID_IMAGE_MODELS = ['image-01'];
 
 
+// Default Description
+export const OUTPUT_DIRECTORY_DESCRIPTION = 'The directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`';  
+

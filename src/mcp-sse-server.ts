@@ -36,6 +36,7 @@ import { VoiceDesignAPI } from './api/voice-design.js';
 import { playAudio } from './utils/audio.js';
 import { z } from 'zod';
 import 'dotenv/config';
+import { COMMON_PARAMETERS_SCHEMA } from './schema/index.js';
 
 // Heartbeat interval in milliseconds
 const HEARTBEAT_INTERVAL = 30000;
@@ -172,7 +173,7 @@ export class MCPSSEServer {
       'Convert text to audio with a given voice and save the output audio file to a given directory. If no directory is provided, the file will be saved to desktop. If no voice ID is provided, the default voice will be used.\n\nNote: This tool calls MiniMax API and may incur costs. Use only when explicitly requested by the user.',
       {
         text: z.string().describe('Text to convert to audio'),
-        outputDirectory: z.string().optional().describe('Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
         voiceId: z.string().optional().default(DEFAULT_VOICE_ID).describe('Voice ID to use, e.g. "female-shaonv"'),
         model: z.string().optional().default(DEFAULT_SPEECH_MODEL).describe('Model to use'),
         speed: z.number().min(0.5).max(2.0).optional().default(DEFAULT_SPEED).describe('Speech speed'),
@@ -380,7 +381,7 @@ export class MCPSSEServer {
         voiceId: z.string().describe('Voice ID to use'),
         audioFile: z.string().describe('Path to the audio file'),
         text: z.string().optional().describe('Text for the demo audio'),
-        outputDirectory: z.string().optional().describe('Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
         isUrl: z.boolean().optional().default(false).describe('Whether the audio file is a URL'),
       },
       async (params) => {
@@ -445,7 +446,7 @@ export class MCPSSEServer {
           .describe('Image aspect ratio, values: ["1:1", "16:9","4:3", "3:2", "2:3", "3:4", "9:16", "21:9"]'),
         n: z.number().min(1).max(9).optional().default(1).describe('Number of images to generate'),
         promptOptimizer: z.boolean().optional().default(true).describe('Whether to optimize the prompt'),
-        outputDirectory: z.string().optional().describe('Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
         outputFile: z
           .string()
           .optional()
@@ -512,7 +513,7 @@ export class MCPSSEServer {
         firstFrameImage: z.string().optional().describe('First frame image'),
         duration: z.number().optional().describe('The duration of the video. The model must be "MiniMax-Hailuo-02". Values can be 6 and 10.'),
         resolution: z.string().optional().describe('The resolution of the video. The model must be "MiniMax-Hailuo-02". Values range ["768P", "1080P"]'),
-        outputDirectory: z.string().optional().describe('Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
         outputFile: z
           .string()
           .optional()
@@ -593,7 +594,7 @@ export class MCPSSEServer {
           .describe('Model to use, values: ["I2V-01", "I2V-01-Director", "I2V-01-live"]'),
         prompt: z.string().describe('Text prompt for video generation'),
         firstFrameImage: z.string().describe('Path to the first frame image'),
-        outputDirectory: z.string().optional().describe('Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
         outputFile: z
           .string()
           .optional()
@@ -670,10 +671,7 @@ export class MCPSSEServer {
         taskId: z
           .string()
           .describe('The Task ID to query. Should be the task_id returned by `generate_video` tool if `async_mode` is True.'),
-        outputDirectory: z
-          .string()
-          .optional()
-          .describe('The directory to save the video to. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
       },
       async (params: any) => {
         try {
@@ -754,10 +752,7 @@ export class MCPSSEServer {
           .optional()
           .default(DEFAULT_FORMAT)
           .describe('Format of generated music. Values: ["mp3", "wav", "pcm"]'),
-        outputDirectory: z
-          .string()
-          .optional()
-          .describe('The directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
       },
       async (params: MusicGenerationRequest) => {
         try {
@@ -815,11 +810,8 @@ export class MCPSSEServer {
         voiceId: z
           .string()
           .optional()
-          .describe('The id of the voice to use. For example, "male-qn-qingse"/"audiobook_female_1"/"cute_boy"/"Charming_Lady"...',),
-        outputDirectory: z
-          .string()
-          .optional()
-          .describe('The directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`'),
+          .describe('The id of the voice to use. For example, "male-qn-qingse"/"audiobook_female_1"/"cute_boy"/"Charming_Lady"...'),
+        outputDirectory: COMMON_PARAMETERS_SCHEMA.outputDirectory,
       },
       async (params: VoiceDesignRequest) => {
         try {
