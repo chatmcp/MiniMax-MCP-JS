@@ -1,7 +1,7 @@
 import { MiniMaxAPI } from '../utils/api.js';
 import { MinimaxRequestError } from '../exceptions/index.js';
 import { MusicGenerationRequest } from '../types/index.js';
-import { DEFAULT_FORMAT, DEFAULT_MUSIC_MODEL, ERROR_LYRICS_REQUIRED, ERROR_PROMPT_REQUIRED } from '../const/index.js';
+import { DEFAULT_FORMAT, DEFAULT_MUSIC_MODEL, ERROR_LYRICS_REQUIRED, ERROR_PROMPT_REQUIRED, RESOURCE_MODE_URL } from '../const/index.js';
 import * as path from 'path';
 import { buildOutputFile } from '../utils/file.js';
 import * as fs from 'fs';
@@ -41,6 +41,11 @@ export class MusicAPI {
       },
     };
 
+    // Add output format (if specified)
+    if (request.outputFormat === RESOURCE_MODE_URL) {
+      requestData.output_format = 'url';
+    }
+
     try {
       // Send request
       const response = await this.api.post<any>('/v1/music_generation', requestData);
@@ -50,6 +55,11 @@ export class MusicAPI {
 
       if (!audioData) {
         throw new MinimaxRequestError('Could not get audio data from response');
+      }
+
+      // If URL mode, return URL directly
+      if (request.outputFormat === RESOURCE_MODE_URL) {
+        return audioData;
       }
 
       // decode and save file

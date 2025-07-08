@@ -73,6 +73,7 @@ export interface MusicGenerationRequest extends BaseToolRequest {
   bitrate?: number;
   format?: string;
   channel?: number;
+  outputFormat?: string;
 }
 
 export interface VoiceDesignRequest extends BaseToolRequest {
