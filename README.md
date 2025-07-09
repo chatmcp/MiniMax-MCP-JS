@@ -47,6 +47,20 @@ JavaScript/TypeScript implementation of MiniMax MCP, providing image generation,
 - [中文文档](README.zh-CN.md)
 - [Python Version](https://github.com/MiniMax-AI/MiniMax-MCP) - Official Python implementation of MiniMax MCP
 
+## Release Notes
+
+### July 7, 2025
+
+#### 🆕 What's New
+- **Voice Design**: New `voice_design` tool - create custom voices from descriptive prompts with preview audio
+- **Video Enhancement**: Added `MiniMax-Hailuo-02` model with ultra-clear quality and duration/resolution controls  
+- **Music Generation**: Enhanced `music_generation` tool powered by `music-1.5` model
+
+#### 📈 Enhanced Tools
+- `voice_design` - Generate personalized voices from text descriptions
+- `generate_video` - Now supports MiniMax-Hailuo-02 with 6s/10s duration and 768P/1080P resolution options
+- `music_generation` - High-quality music creation with music-1.5 model
+
 ## Features
 
 - Text-to-Speech (TTS)

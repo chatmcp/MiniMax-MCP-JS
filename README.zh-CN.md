@@ -46,6 +46,20 @@ MiniMax MCP JS 是 MiniMax MCP 的 JavaScript/TypeScript 实现，提供图像�
 - [English Documentation](README.md)
 - [Python 版本](https://github.com/MiniMax-AI/MiniMax-MCP) - MiniMax MCP的官方Python实现
 
+## 更新日志
+
+### 2025年7月7日
+
+#### 🆕 新增功能
+- **音色设计**: 新增 `voice_design` 工具 - 根据描述性提示词创建自定义音色并生成试听音频
+- **视频生成增强**: 新增 `MiniMax-Hailuo-02` 模型，支持超清画质和时长/分辨率控制
+- **音乐生成**: 采用 `music-1.5` 模型增强 `music_generation` 工具
+
+#### 📈 功能增强
+- `voice_design` - 根据文本描述生成个性化音色
+- `generate_video` - 现在支持 MiniMax-Hailuo-02 模型，可选择 6s/10s 时长和 768P/1080P 分辨率
+- `music_generation` - 采用 music-1.5 模型进行高质量音乐创作
+
 ## 功能特性
 
 - 文本转语音 (TTS)
