@@ -49,6 +49,12 @@ JavaScript/TypeScript implementation of MiniMax MCP, providing image generation,
 
 ## Release Notes
 
+### July 22, 2025
+
+#### 🔧 Fixes & Improvements
+- **TTS Tool Fixes**: Fixed parameter handling for `languageBoost` and `subtitleEnable` in the `text_to_audio` tool
+- **API Response Enhancement**: TTS API can return both audio file and subtitle file, providing a more complete speech-to-text experience
+
 ### July 7, 2025
 
 #### 🆕 What's New
@@ -306,11 +312,11 @@ Parameters:
 - `sampleRate`: Sample rate (Hz), options are 8000, 16000, 22050, 24000, 32000, 44100, default is 32000
 - `bitrate`: Bitrate (bps), options are 64000, 96000, 128000, 160000, 192000, 224000, 256000, 320000, default is 128000
 - `channel`: Audio channels, options are 1 or 2, default is 1
-- `languageBoost`: Language boost, default is 'auto'
-- `latexRead`: Enable LaTeX formula reading
-- `pronunciationDict`: Pronunciation dictionary
+- `languageBoost`: Enhance the ability to recognize specified languages and dialects.
+Supported values include:
+'Chinese', 'Chinese,Yue', 'English', 'Arabic', 'Russian', 'Spanish', 'French', 'Portuguese', 'German', 'Turkish', 'Dutch', 'Ukrainian', 'Vietnamese', 'Indonesian', 'Japanese', 'Italian', 'Korean', 'Thai', 'Polish', 'Romanian', 'Greek', 'Czech', 'Finnish', 'Hindi', 'auto', default is 'auto'
 - `stream`: Enable streaming output
-- `subtitleEnable`: Enable subtitle generation
+- `subtitleEnable`: The parameter controls whether the subtitle service is enabled. The model must be 'speech-01-turbo' or 'speech-01-hd'. If this parameter is not provided, the default value is false
 - `outputDirectory`: Directory to save the output file. `outputDirectory` is relative to `MINIMAX_MCP_BASE_PATH` (or `basePath` in config). The final save path is `${basePath}/${outputDirectory}`. For example, if `MINIMAX_MCP_BASE_PATH=~/Desktop` and `outputDirectory=workspace`, the output will be saved to `~/Desktop/workspace/`. (optional)
 - `outputFile`: Path to save the output file (optional, auto-generated if not provided)
 
