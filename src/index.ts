@@ -31,7 +31,7 @@ export async function startMiniMaxMCP(customConfig?: Partial<Config>): Promise<v
     switch (mode) {
       case TRANSPORT_MODE_REST:
         // console.log(`[${new Date().toISOString()}] Starting REST server`);
-        return new MCPRestServer(config).start();
+        return new MCPServer(config).start();
       case TRANSPORT_MODE_SSE:
         // console.log(`[${new Date().toISOString()}] Starting SSE server`);
         return new MCPSSEServer(config).start();

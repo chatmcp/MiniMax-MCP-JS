@@ -2,6 +2,7 @@
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { RestServerTransport } from '@chatmcp/sdk/server/rest.js';
 import { z } from 'zod';
 import { Config, ServerOptions, TransportMode } from './types/index.js';
 import { MiniMaxAPI } from './utils/api.js';
@@ -96,7 +97,7 @@ export class MCPServer {
 
     // Remove unnecessary server configuration for STDIO mode
     // STDIO mode doesn't need port and endpoint configuration
-    delete this.config.server;
+    // delete this.config.server;
 
     // console.log(`[${new Date().toISOString()}] STDIO server configuration initialized`);
   }
@@ -913,6 +914,22 @@ export class MCPServer {
    * Start standard input/output server
    */
   public async startStdioServer(): Promise<void> {
+    const mode = this.config.server?.mode
+    const port = this.config.server?.port || 3000
+    const endpoint = this.config.server?.endpoint || '/rest'
+
+    if (mode === "rest") {
+      const transport = new RestServerTransport({
+        port,
+        endpoint,
+      });
+      await this.server.connect(transport);
+ 
+      await transport.startServer();
+ 
+      return;
+    }
+
     // console.log('Starting stdio server');
     const transport = new StdioServerTransport();
     await this.server.connect(transport);

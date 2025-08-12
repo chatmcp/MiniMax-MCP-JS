@@ -13,8 +13,8 @@
     "dev": "tsc -w",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "prettier --check \"src/**/*.ts\"",
-    "prepare": "pnpm run build",
-    "pretest": "pnpm run build",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
   },
   "keywords": [
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/MiniMax-AI/MiniMax-MCP-JS#readme",
   "dependencies": {
-    "@chatmcp/sdk": "^1.0.5",
+    "@chatmcp/sdk": "^1.0.6",
     "@modelcontextprotocol/sdk": "^1.7.0",
     "axios": "^1.8.4",
     "cors": "^2.8.5",
